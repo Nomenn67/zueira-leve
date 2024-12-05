@@ -5,48 +5,92 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Namorar</title>
-  </head>
+    <style>
+      body {
+        background-color: #ffcccc; /* Fundo mais suave */
+        margin: 0;
+        overflow: hidden;
+        font-family: Arial, sans-serif;
+      }
 
-  <body style="background-color: red;">
-    <div
-      id="element"
-      style="
-        width: 100vw;
-        height: 100vh;
+      .heart {
+        position: absolute;
+        font-size: 2rem;
+        animation: float 10s infinite ease-in-out;
+        opacity: 0.7;
+        pointer-events: none; /* Impede o clique nos corações */
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(100vh) translateX(0);
+          opacity: 0.7;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-100vh) translateX(calc(-50vw + 100px));
+          opacity: 0.7;
+        }
+      }
+
+      #element {
         display: flex;
-        flex-direction: row;
         justify-content: center;
         align-items: center;
-      "
-    >
+        height: 100vh;
+        width: 100vw;
+        flex-direction: column; /* Alinha os botões em uma coluna */
+        gap: 20px; /* Espaço entre os botões */
+      }
+
+      h3 {
+        font-weight: bold;
+        color: white;
+      }
+
+      button {
+        margin-right: 10px;
+        padding: 10px;
+        width: 100px;
+        cursor: pointer;
+        background-color: white;
+        border-radius: 10px;
+        border: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Container Principal -->
+    <div id="element">
       <div style="width: 300px; height: 300px; text-align: center">
-        <h3 style="font-weight: bold;  color: white;">Você quer namorar comigo ?</h3>
-        <button
-          style="
-            margin-right: 10px;
-            padding: 10px;
-            width: 100px;
-            cursor: pointer;
-            background-color: white;
-            border-radius: 10px;
-            border: none;
-          "
-          id="btn-yes"
-          onclick="openYoutube()"
-        >
-          Sim
-        </button>
-        <button
-          style="padding: 10px; width: 100px; cursor: pointer; background-color: white; border-radius: 10px; border: none;"
-          id="btn-no"
-        >
-          Não
-        </button>
+        <h3>Você quer namorar comigo ?</h3>
+        <button id="btn-yes" onclick="openYoutube()">Sim</button>
+        <button id="btn-no">Não</button>
       </div>
     </div>
+
     <script>
+      // Lista de corações
+      const emojis = ["❤️", "🩷", "💞", "💖", "💗"];
+
+      // Função para criar corações flutuantes
+      function createHearts() {
+        for (let i = 0; i < 20; i++) {
+          const heart = document.createElement("div");
+          heart.className = "heart";
+          heart.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+          heart.style.left = Math.random() * window.innerWidth + "px";
+          heart.style.animationDuration = Math.random() * 5 + 5 + "s";
+          document.body.appendChild(heart);
+        }
+      }
+
+      // Faz o botão "Não" fugir
       const element = document.getElementById("btn-no");
-        element.addEventListener("mouseenter", () => {
+      element.addEventListener("mouseenter", () => {
         const x = Math.floor(Math.random() * window.innerWidth);
         const y = Math.floor(Math.random() * window.innerHeight);
         element.style.position = "absolute";
@@ -54,9 +98,13 @@
         element.style.top = y + "px";
       });
 
+      // Abre o link do YouTube
       function openYoutube() {
         window.open("https://www.youtube.com/watch?v=orWnzqBA63w");
       }
+
+      // Chama a função de corações
+      createHearts();
     </script>
   </body>
 </html>
